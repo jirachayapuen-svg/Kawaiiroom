@@ -73,6 +73,8 @@ input[type=color]{width:34px;height:34px;border:1.5px solid var(--ink);backgroun
 </div></div>
 <script>
 const $=id=>document.getElementById(id);
+const G=(c,r,w,h,g,sh=[])=>{const a=[];for(let j=0;j<r;j++)for(let i=0;i<c;i++)a.push([i*(w+g),j*(h+g),w,h,sh[(j*c+i)%(sh.length||1)]||''])
+ return a};
 const T=[
 {n:'Cherry Milk',sub:'dreamy pastel',c:1,r:4,ra:4/3,bg:['#ffd9e4','#ffc2d4'],ink:'#c23b62',foot:'cherry milk',ff:'400 46px Pacifico',art:'cherry',cd:10,pad:40,gap:34,fil:'brightness(1.12) contrast(.88) saturate(.9)',tint:[['#ffb3c6',.28]],fx:{b:.35,g:.05,fade:'#ffe4ec'}},
 {n:'Rosé Archive',sub:'soft film',c:1,r:3,ra:.8,shape:'arch',bg:['#f4d3d6','#e9b9c1'],ink:'#7c3346',foot:'rosé archive',ff:'italic 600 44px "Playfair Display"',art:'rose',pad:40,gap:26,fil:'sepia(.25) saturate(.85) contrast(.95) brightness(1.06)',tint:[['#e8a0b4',.22]],fx:{fade:'#f5d9d2',l:'#ffc9a0',g:.09,v:.22}},
@@ -101,7 +103,15 @@ const T=[
 {n:'Long Strip 6',sub:'แนวตั้งยาว · 6 เฟรม',c:1,r:6,ra:4/3,cw:300,rad:6,bg:['#ffd9e4','#ffc2d4'],pat:'stripe',pc:'rgba(255,255,255,.5)',ink:'#c23b62',foot:'long strip',ff:'400 46px Pacifico',art:'em',em:['🍓','💌'],pad:30,gap:12,stitch:'#ffffff',fil:'brightness(1.12) contrast(.92) saturate(1.1)',tint:[['#ffb3c6',.2]],fx:{g:.05}},
 {n:'Twin Polaroid',sub:'โพลารอยด์คู่',c:2,r:1,ra:.85,cd:14,rad:3,bg:['#f3e9dd','#e8d9c6'],ink:'#6b5646',foot:'twin polaroid',ff:'700 54px Caveat',art:'em',em:['📸','🤎'],pad:44,gap:30,fil:'sepia(.2) contrast(1.05) saturate(.95)',tint:[['#ffcf9a',.12]],fx:{g:.1,v:.2}},
 {n:'Wide Six',sub:'แนวนอน · 6 เฟรม',c:3,r:2,ra:4/3,cw:340,rad:14,bg:['#ffe4ec','#ffd0de'],dots:['♥','rgba(255,120,150,.3)'],ink:'#d6567a',foot:'wide six',ff:'700 54px Caveat',art:'em',em:['💗','✨'],pad:34,gap:20,stitch:'#ffffff',fil:'brightness(1.12) contrast(1.15) saturate(1.3)',tint:[['#8fd8ff',.08]],fx:{fl:1,g:.05}},
-{n:'Lucky Film 8',sub:'ฟิล์ม · 8 เฟรม',c:2,r:4,ra:4/3,cw:300,rad:4,bg:['#d9f2c8','#b5e29a'],dots:['✿','rgba(255,255,255,.5)'],ink:'#2f7a4a',foot:'lucky film',ff:'400 40px Shrikhand',art:'em',em:['🍀','🐸'],pad:34,gap:12,ol:'#fff',olw:4,fil:'saturate(1.3) contrast(1.05) brightness(1.06)',tint:[['#b5e29a',.14]],fx:{g:.06,v:.12}}
+{n:'Lucky Film 8',sub:'ฟิล์ม · 8 เฟรม',c:2,r:4,ra:4/3,cw:300,rad:4,bg:['#d9f2c8','#b5e29a'],dots:['✿','rgba(255,255,255,.5)'],ink:'#2f7a4a',foot:'lucky film',ff:'400 40px Shrikhand',art:'em',em:['🍀','🐸'],pad:34,gap:12,ol:'#fff',olw:4,fil:'saturate(1.3) contrast(1.05) brightness(1.06)',tint:[['#b5e29a',.14]],fx:{g:.06,v:.12}},
+{n:'Sweetie Pie',sub:'สก๊อตบุ๊ก · 4 รูป',ra:1,lay:[[0,0,330,330],[380,0,330,330],[0,380,330,330],[380,380,330,330]],lw:710,lh:710,hd:110,title:'Sweetie Pie',tf:'400 72px Pacifico',bg:['#ffd9e4','#ffc2d4'],pat:'stripe',pc:'rgba(170,215,120,.5)',paper:1,sw:1,mat:'#f7a8c4',ink:'#7a3f2a',foot:'hello kawaii',ff:'400 46px Pacifico',art:'em',dk:['flower','lady','flower','🎀'],pad:60,fil:'brightness(1.12) contrast(1.08) saturate(1.3)',tint:[['#ffb3c6',.2],['#9fd8ff',.22],['#c7f0a0',.22],['#ffe88a',.22]],fx:{g:.05}},
+{n:'Big & Small',sub:'ใหญ่+เล็ก · 4 รูป',ra:1,lay:[[0,0,440,440],[480,0,140,140],[480,150,140,140],[480,300,140,140]],lw:620,lh:440,hd:90,title:'Kawaii Room',tf:'400 64px Pacifico',bg:['#d4ecff','#b4d8ff'],dots:['✦','rgba(255,255,255,.8)'],paper:1,sw:1,mat:'#fff',ink:'#3a6ea8',foot:'kawaii room',ff:'400 46px Pacifico',art:'em',dk:['🧸','⭐','☁️','flower'],pad:56,fil:'brightness(1.12) contrast(1.08) saturate(1.3)',tint:[['#9cc8ff',.2],['#ffb3c6',.22],['#ffe88a',.22],['#c7f0a0',.22]],fx:{g:.05}},
+{n:'Collage 6',sub:'คอลลาจ · 6 รูป',ra:1,lay:[[0,0,320,320],[340,0,150,150],[510,0,150,150],[340,170,150,150],[510,170,150,150],[0,340,660,220]],lw:660,lh:560,hd:90,title:'Sunny Day',tf:'400 56px Shrikhand',bg:['#fff1c9','#ffe28a'],pat:'gingham',pc:'rgba(255,150,60,.22)',paper:1,mat:'#fff',mp:11,ink:'#c2542d',foot:'sunny day',ff:'400 40px Shrikhand',art:'em',dk:['🍓','flower','lady','🌼'],pad:56,fil:'brightness(1.12) contrast(1.08) saturate(1.3)',tint:[['#ffcf5a',.18],['#ff9ec4',.2],['#9fd8ff',.2]],fx:{g:.05}},
+{n:'Tall Duo',sub:'ตั้งยาว · 2 รูป',ra:1,lay:[[0,0,280,340],[0,380,280,340]],lw:280,lh:720,hd:80,title:'Hello!',tf:'400 56px Pacifico',bg:['#d9f2c8','#b5e29a'],pat:'stripe',pc:'rgba(255,255,255,.45)',paper:1,mat:'#f7a8c4',ink:'#2f7a4a',foot:'hello kawaii',ff:'400 40px Pacifico',art:'em',dk:['flower','lady','🦋'],pad:56,fil:'brightness(1.12) contrast(1.08) saturate(1.3)',tint:[['#ffb3c6',.2],['#9fd8ff',.22]],fx:{g:.05}},
+{n:'Heart Collage',sub:'หัวใจ+ดาว · 6 รูป',ra:1,lay:[[0,0,400,400,'heart'],[430,0,210,190,'oval'],[430,210,210,190,'oval'],[0,440,200,200,'star'],[220,440,200,200,'star'],[440,440,200,200,'star']],lw:640,lh:640,hd:90,title:'Lavender Dream',tf:'400 52px Pacifico',bg:['#e9defa','#cdb8f2'],dots:['✦','rgba(255,255,255,.6)'],paper:1,ol:'#ffffff',olw:7,ink:'#5b3fa0',foot:'lavender dream',ff:'400 40px Pacifico',art:'em',dk:['🦋','💜','flower','✨'],pad:56,fil:'brightness(1.12) contrast(1.08) saturate(1.3)',tint:[['#b79cf0',.22],['#ff9ec4',.22]],fx:{g:.05}},
+{n:'Lucky Nine',sub:'หลายทรง · 9 รูป',ra:1,lay:G(3,3,220,220,30,['','oval','','heart','','heart','','oval','']),lw:720,lh:720,hd:90,title:'Lucky Nine',tf:'400 56px Shrikhand',bg:['#d9f2c8','#b5e29a'],dots:['✿','rgba(255,255,255,.6)'],paper:1,mat:'#fff',mp:10,ol:'#ffffff',olw:6,ink:'#2f7a4a',foot:'lucky nine',ff:'400 40px Shrikhand',art:'em',dk:['🍀','flower','🐸','lady'],pad:56,fil:'brightness(1.12) contrast(1.08) saturate(1.3)',tint:[['#ffe88a',.2],['#ff9ec4',.2],['#9fd8ff',.2]],fx:{g:.05}},
+{n:'Mini 12',sub:'มินิ · 12 รูป',ra:1,lay:G(4,3,160,200,18),lw:694,lh:636,hd:90,title:'Mini Me',tf:'400 52px Pacifico',bg:['#ffe4ec','#ffd0de'],dots:['♥','rgba(255,120,150,.3)'],paper:1,stitch:'#ffffff',ink:'#d6567a',foot:'mini me',ff:'400 40px Pacifico',art:'em',dk:['💗','flower','✨'],pad:50,fil:'brightness(1.12) contrast(1.08) saturate(1.3)',tint:[['#ffb3c6',.2],['#9fd8ff',.2],['#ffe88a',.2]],fx:{g:.05}},
+{n:'ID Sheet Mix',sub:'ID ใหญ่+เล็ก · 6 รูป',ra:1,lay:[[0,0,300,380],[320,0,300,380],[0,400,145,190],[155,400,145,190],[320,400,145,190],[475,400,145,190]],lw:620,lh:590,bg:['#ffffff','#f4f8ff'],pat:'grid',pc:'rgba(90,160,230,.2)',ol:'#ffffff',olw:4,ink:'#2a5d9f',foot:'ID PHOTO SYSTEM · 002',ff:'700 28px "Space Mono"',pad:40,fil:'contrast(1.05) brightness(1.06)',tint:[[]],fx:{g:.04}}
 ];
 const STK=['(˶ᵔ ᵕ ᵔ˶)','૮₍˶• ༝ •˶₎ა','ᐢ._.ᐢ','(๑>ᴗ<๑)','˙ᗜ˙','´ᯅ`','•᷄ᯅ•᷅','>ᴗoಣ','⦮._.⦯','ᐢ_ ̫ _ᐢ','ඡ·̯ඡ','·ᜊ·','♡','✧','⋆.˚','୨୧','₊˚⊹♡','ᵔᴗᵔ','☆','zZz','♪','🎀','💖','✨','🌸','🍓','🧸','⭐','🦋','☁️','🌈','🍒','💌','🐰','🐻','🫶','😚','🥹','💫','🍀','🌷','🎧','📸','🔥','👑','🩷','💋','🌙','🍋','🍑','🐱','🐶','🍰','🧋','🫧','💐','🪩','💿','📼'];
 const FL=[{n:'ตามกรอบ'},{n:'ธรรมชาติ',fil:'brightness(1.04) contrast(1.06) saturate(1.05)',tint:[[]]},{n:'ใสๆ',fil:'brightness(1.15) contrast(.92) saturate(1.1)',tint:[['#ffd6e0',.12]]},{n:'ฟิล์ม',fil:'sepia(.3) contrast(1.1) saturate(.9)',tint:[['#ffb070',.12]]},{n:'B&W',fil:'grayscale(1) contrast(1.25)',tint:[[]]},{n:'ซีเปีย',fil:'sepia(.85) contrast(1.05)',tint:[[]]},{n:'โทนเย็น',fil:'saturate(1.1) contrast(1.08) brightness(1.05)',tint:[['#6aa8ff',.2]]},{n:'โทนอุ่น',fil:'saturate(1.25) brightness(1.06)',tint:[['#ffb35a',.2]]},{n:'สดจัด',fil:'saturate(1.7) contrast(1.15)',tint:[[]]},{n:'พาสเทล',fil:'brightness(1.12) contrast(.85) saturate(.85)',tint:[['#d8c4ff',.22]]}];
@@ -139,7 +149,7 @@ function fx(g,o,x,y,w,h,s){const f=o.fx||{};
  if(f.l){const q=g.createLinearGradient(x,y,x+w*.6,y+h*.5);q.addColorStop(0,f.l);q.addColorStop(1,'rgba(255,255,255,0)');g.globalCompositeOperation='screen';g.globalAlpha=.45;g.fillStyle=q;g.fillRect(x,y,w,h);g.globalCompositeOperation='source-over';g.globalAlpha=1}
  if(f.fl){const q=g.createRadialGradient(x+w/2,y+h*.4,0,x+w/2,y+h*.4,w*.7);q.addColorStop(0,'rgba(255,255,255,.45)');q.addColorStop(1,'rgba(255,255,255,0)');g.fillStyle=q;g.fillRect(x,y,w,h)}
  if(f.v){const q=g.createRadialGradient(x+w/2,y+h/2,Math.min(w,h)*.35,x+w/2,y+h/2,Math.max(w,h)*.75);q.addColorStop(0,'rgba(0,0,0,0)');q.addColorStop(1,`rgba(0,0,0,${f.v*1.8})`);g.fillStyle=q;g.fillRect(x,y,w,h)}
- if(f.g){g.globalCompositeOperation='overlay';g.globalAlpha=f.g*3;g.fillStyle=noise(g);g.fillRect(x,y,w,h);g.globalCompositeOperation='source-over';g.globalAlpha=1}
+ if(f.g){g.globalCompositeOperation='overlay';g.globalAlpha=f.g*3;g.fillStyle=nz(g);g.fillRect(x,y,w,h);g.globalCompositeOperation='source-over';g.globalAlpha=1}
  if(f.st){g.font='700 22px "Space Mono",monospace';g.textAlign='right';g.textBaseline='alphabetic';g.fillStyle='#ff9a2b';g.shadowColor='#ff6a00';g.shadowBlur=6;const d=new Date();g.fillText(`'${String(d.getFullYear()).slice(2)} ${d.getMonth()+1} ${d.getDate()}`,x+w-16,y+h-16);g.shadowBlur=0}
 }
 function dv(g,o,i,x,y,w,h,n){
@@ -154,7 +164,7 @@ function dv(g,o,i,x,y,w,h,n){
  case 'heart':heart(g,x+w*.04,y+h*.2,30,'#fff');heart(g,x+w*.96,y+h*.62,22,'#fff');spark(g,x+w*.88,y+h*.08,20,'#ffe6e6');spark(g,x+w*.1,y+h*.8,14,'#ffe6e6');break;
  case 'picnic':fruit(g,a?x+w-6:x+6,y+6,22);fruit(g,a?x+w-38:x+38,y+16,15);break;
  case 'chrome':shape(g,x,y,w,h,'',o.rad);g.lineWidth=7;g.strokeStyle='rgba(255,255,255,.95)';g.stroke();shape(g,x+4,y+4,w-8,h-8,'',o.rad);g.lineWidth=2;g.strokeStyle='rgba(70,90,140,.45)';g.stroke();cstar(g,a?x+8:x+w-8,y+8,24);break;
- default:{const e=o.em;if(e){g.font='30px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(e[a],a?x+w-4:x+4,y+4);g.fillText(e[1-a],a?x+6:x+w-6,y+h-4)}}
+ default:{if(o.dk)scatter(g,o,i,x,y,w,h);const e=o.em;if(e){g.font='30px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(e[a],a?x+w-4:x+4,y+4);g.fillText(e[1-a],a?x+6:x+w-6,y+h-4)}}
  }
 }
 function fcv(s,css,mw){let w=s.videoWidth||s.width,h=s.videoHeight||s.height;if(mw&&w>mw){h=h*mw/w;w=mw}w=Math.round(w);h=Math.round(h);
@@ -174,19 +184,40 @@ function fcv(s,css,mw){let w=s.videoWidth||s.width,h=s.videoHeight||s.height;if(
   g.putImageData(d,0,0)}
  if(cn){s._k=css;s._c=c}return c}
 const FS=document.createElement('canvas').getContext('2d').filter!==undefined;
-function cv(g,s,css,x,y,w,h,mw){const sw=s.videoWidth||s.width,sh=s.videoHeight||s.height;
+function ds(s,f){let w=s.width,h=s.height;if(f>=.55)return s;const key='d'+f.toFixed(3);if(s._ds&&s._ds[0]===key)return s._ds[1];
+ let c=s;const tw=w*f;while(w/2>=tw&&w>16){w=Math.round(w/2);h=Math.round(h/2);const t=document.createElement('canvas');t.width=w;t.height=h;const q=t.getContext('2d');q.imageSmoothingQuality='high';q.drawImage(c,0,0,w,h);c=t}
+ s._ds=[key,c];return c}
+function cv(g,s0,css,x,y,w,h,mw){const s=s0.tagName==='CANVAS'?ds(s0,Math.max(w/s0.width,h/s0.height)*KK):s0,sw=s.videoWidth||s.width,sh=s.videoHeight||s.height;
  if(FS){g.filter=css;cover(g,s,sw,sh,x,y,w,h);g.filter='none'}
  else{const c=fcv(s,css,mw);cover(g,c,c.width,c.height,x,y,w,h)}}
+const nn=o=>o.lay?o.lay.length:o.c*o.r;
+function scal(g,x,y,w,h,r){g.beginPath();g.rect(x,y,w,h);const a=Math.max(2,Math.round(w/(2*r))),b=Math.max(2,Math.round(h/(2*r))),sa=w/a,sb=h/b;
+ for(let i=0;i<a;i++)for(const yy of[y,y+h]){const cx=x+sa*(i+.5);g.moveTo(cx+sa/2,yy);g.arc(cx,yy,sa/2,0,7)}
+ for(let j=0;j<b;j++)for(const xx of[x,x+w]){const cy=y+sb*(j+.5);g.moveTo(xx+sb/2,cy);g.arc(xx,cy,sb/2,0,7)}}
+function swirl(g,W,H){g.save();g.strokeStyle='rgba(255,255,255,.75)';g.lineWidth=6;g.lineCap='round';
+ [[80,90,1],[W-80,H-170,-1]].forEach(([cx,cy,d])=>{g.beginPath();for(let t=0;t<14;t+=.1){const r=t*8;g.lineTo(cx+d*Math.cos(t)*r,cy+d*Math.sin(t)*r)}g.stroke()});g.restore()}
+const FC=['#7fd0ff','#ff9ec4','#ffd84d','#b79cf0'];
+function flower(g,x,y,s,k){g.fillStyle=FC[k%4];g.strokeStyle='rgba(0,0,0,.18)';g.lineWidth=2;for(let i=0;i<6;i++){const a=i*Math.PI/3;g.beginPath();g.arc(x+Math.cos(a)*s*.55,y+Math.sin(a)*s*.55,s*.42,0,7);g.fill();g.stroke()}g.fillStyle=k%3?'#ffd84d':'#fff';g.beginPath();g.arc(x,y,s*.3,0,7);g.fill();g.stroke()}
+function lady(g,x,y,s){g.fillStyle='#e0262f';g.strokeStyle='#222';g.lineWidth=2;g.beginPath();g.ellipse(x,y,s*.6,s*.7,0,0,7);g.fill();g.stroke();g.fillStyle='#222';g.beginPath();g.arc(x,y-s*.68,s*.3,0,7);g.fill();g.beginPath();g.moveTo(x,y-s*.6);g.lineTo(x,y+s*.7);g.stroke();[[-.3,-.2],[.3,-.2],[-.3,.25],[.3,.25],[-.15,.5],[.15,.5]].forEach(([a,b])=>{g.beginPath();g.arc(x+a*s,y+b*s,s*.11,0,7);g.fill()})}
+const PP=[[0,0],[1,0],[1,1],[0,1],[.5,0],[.5,1],[0,.5],[1,.5]];
+function scatter(g,o,i,x,y,w,h){const D=o.dk,m=Math.min(w,h);for(let j=0;j<2;j++){const it=D[(i*2+j)%D.length],q=PP[(i*3+j*4+1)%8],s=Math.max(22,m*.15)*(1+((i+j)%3)*.18),px=x+q[0]*w,py=y+q[1]*h;
+ g.save();g.translate(px,py);g.rotate(((i*7+j*5)%5-2)*.18);g.shadowColor='rgba(0,0,0,.2)';g.shadowBlur=5;
+ if(it==='flower')flower(g,0,0,s*.62,i+j);else if(it==='lady')lady(g,0,0,s*.6);else{g.font=(s*1.25)+'px sans-serif';g.textAlign='center';g.textBaseline='middle';g.fillText(it,0,0)}g.restore()}}
+let KK=1;function nz(g){const p=noise(g);if(p.setTransform)p.setTransform(new DOMMatrix().scale(1/KK));return p}
 function draw(c,ti=S.t,tb=0){
- const o=T[ti],cw=o.cw||420,ch=Math.round(cw/o.ra),pad=o.pad||36,gap=o.gap==null?18:o.gap,cd=o.cd||0,ft=110,ow=cw+2*cd,oh=ch+2*cd,N=o.c*o.r;
- const W=pad*2+o.c*ow+(o.c-1)*gap,H=pad*2+o.r*oh+(o.r-1)*gap+ft;
- const K=1;c.width=W*K;c.height=H*K;const g=c.getContext('2d');g.scale(K,K);g.imageSmoothingQuality='high';
+ const o=T[ti],CW=o.cw||420,CH=Math.round(CW/o.ra),hd=o.hd||0,pad=o.pad||36,gap=o.gap==null?18:o.gap,cd=o.cd||0,ft=110,ow=CW+2*cd,oh=CH+2*cd,N=nn(o);
+ const W=o.lay?pad*2+o.lw:pad*2+o.c*ow+(o.c-1)*gap,H=(o.lay?pad*2+o.lh:pad*2+o.r*oh+(o.r-1)*gap)+ft+hd;
+ const K=tb?1:Math.max(1,Math.min(2,Math.sqrt(12e6/(W*H))));KK=K;c.width=W*K;c.height=H*K;const g=c.getContext('2d');g.scale(K,K);g.imageSmoothingQuality='high';
  if(!tb&&S.col)g.fillStyle=S.col;else{const q=g.createLinearGradient(0,0,W*.6,H);o.bg.forEach((k,j)=>q.addColorStop(j/(o.bg.length-1||1),k));g.fillStyle=q}
  g.fillRect(0,0,W,H);patt(g,o,W,H);
+ if(o.paper){g.globalCompositeOperation='overlay';g.globalAlpha=.4;g.fillStyle=nz(g);g.fillRect(0,0,W,H);g.globalCompositeOperation='source-over';g.globalAlpha=1}
+ if(o.sw)swirl(g,W,H);
+ if(hd&&o.title){g.fillStyle=o.ink;g.font=o.tf;g.textAlign='center';g.textBaseline='middle';g.fillText(o.title,W/2,pad*.6+hd/2)}
  for(let i=0;i<N;i++){
-  const x=pad+cd+(i%o.c)*(ow+gap),y=pad+cd+Math.floor(i/o.c)*(oh+gap);
+  const L=o.lay&&o.lay[i],sh=L&&L[4]||o.shape,x=L?pad+L[0]:pad+cd+(i%o.c)*(ow+gap),y=(L?pad+L[1]:pad+cd+Math.floor(i/o.c)*(oh+gap))+hd,cw=L?L[2]:CW,ch=L?L[3]:CH;
   if(cd){g.save();g.shadowColor='rgba(0,0,0,.2)';g.shadowBlur=12;g.shadowOffsetY=4;g.fillStyle='#fff';shape(g,x-cd,y-cd,ow,oh,'',(o.rad||10)+4);g.fill();g.restore()}
-  g.save();shape(g,x,y,cw,ch,o.shape,o.rad);g.clip();
+  if(o.mat&&!sh){const m=o.mp||14;g.save();g.shadowColor='rgba(0,0,0,.22)';g.shadowBlur=8;g.shadowOffsetY=3;g.fillStyle=o.mat;scal(g,x-m,y-m,cw+2*m,ch+2*m,9);g.fill();g.restore()}
+  g.save();shape(g,x,y,cw,ch,sh,o.rad);g.clip();
   g.fillStyle='rgba(255,255,255,.55)';g.fillRect(x,y,cw,ch);
   const s=tb?0:S.shots[i];
   if(s||tb){
@@ -198,8 +229,8 @@ function draw(c,ti=S.t,tb=0){
    fx(g,o,x,y,cw,ch,s);
   }else{g.font='40px "Space Mono",monospace';g.textAlign='center';g.textBaseline='middle';g.fillStyle='rgba(0,0,0,.22)';g.fillText(i+1,x+cw/2,y+ch/2)}
   g.restore();
-  if(o.ol){g.save();shape(g,x,y,cw,ch,o.shape,o.rad);g.lineWidth=o.olw||6;g.strokeStyle=o.ol;g.stroke();g.restore()}
-  if(o.stitch){g.save();shape(g,x+5,y+5,cw-10,ch-10,o.shape,o.rad);g.setLineDash([7,6]);g.lineWidth=2;g.strokeStyle=o.stitch;g.stroke();g.restore()}
+  if(o.ol){g.save();shape(g,x,y,cw,ch,sh,o.rad);g.lineWidth=o.olw||6;g.strokeStyle=o.ol;g.stroke();g.restore()}
+  if(o.stitch){g.save();shape(g,x+5,y+5,cw-10,ch-10,sh,o.rad);g.setLineDash([7,6]);g.lineWidth=2;g.strokeStyle=o.stitch;g.stroke();g.restore()}
   dv(g,o,i,x,y,cw,ch,N);
  }
  g.fillStyle=o.ink;g.textAlign='center';g.textBaseline='middle';const ff=FO[S.fo].f||o.ff,cap=(tb?'':$('tx').value)||o.foot;g.font=ff;
@@ -249,7 +280,7 @@ function startRec(){
 }
 $('go').onclick=async()=>{
  if(S.busy||!v.videoWidth)return;S.busy=true;$('go').disabled=true;$('note').textContent='';
- const o=th(),N=o.c*o.r;S.shots=[];out.className='hide';draw(out);startRec();
+ const o=th(),N=nn(o);S.shots=[];out.className='hide';draw(out);startRec();
  for(let i=0;i<N;i++){
   S.idx=i;setTint(i);
   for(let t=S.tm;t>0;t--){$('cd').textContent=t;await sleep(1000)}
@@ -271,7 +302,7 @@ async function save(name,data){
 }
 $('sp').onclick=()=>{if(!S.shots.length){$('note').textContent='ถ่ายรูปก่อนน้า';return}out.toBlob(b=>save('flashroom-'+Date.now()+'.png',b),'image/png')};
 $('sv').onclick=()=>{if(!videoBlob){$('note').textContent=S.shots.length?'วิดีโอยังไม่พร้อม หรือเบราว์เซอร์ไม่รองรับการอัด':'ถ่ายรูปก่อนน้า';return}save('flashroom-'+Date.now()+'.'+videoExt,videoBlob)};
-navigator.mediaDevices&&navigator.mediaDevices.getUserMedia?navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1280}},audio:false}).then(s=>{v.srcObject=s;$('msg').remove()}).catch(e=>{$('msg').textContent='เปิดกล้องไม่ได้ ('+(e&&e.name||'error')+') กรุณาอนุญาตการใช้กล้องแล้วรีเฟรชหน้า'}):($('msg').textContent='เบราว์เซอร์นี้ไม่รองรับกล้อง');
+navigator.mediaDevices&&navigator.mediaDevices.getUserMedia?navigator.mediaDevices.getUserMedia({video:{facingMode:'user',width:{ideal:1920},height:{ideal:1080}},audio:false}).then(s=>{v.srcObject=s;$('msg').remove()}).catch(e=>{$('msg').textContent='เปิดกล้องไม่ได้ ('+(e&&e.name||'error')+') กรุณาอนุญาตการใช้กล้องแล้วรีเฟรชหน้า'}):($('msg').textContent='เบราว์เซอร์นี้ไม่รองรับกล้อง');
 ui();frames();apply();
 Promise.all(['400 40px Pacifico','italic 600 40px "Playfair Display"','700 40px "Space Mono"','700 40px Caveat','400 40px "DM Serif Display"'].map(f=>document.fonts.load(f))).then(()=>{frames();draw(out)}).catch(()=>{});
 </script></body></html>
