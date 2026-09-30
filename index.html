@@ -1,93 +1,89 @@
- (cd "$(git rev-parse --show-toplevel)" && printf '%s' 'diff --git a/index.html b/index.html
-index 65cb94d6e8390378511bb250f209b995f95474b8..5b63830b1b2ada4f5d8589f7fff1bc13712b21ec 100644
---- a/index.html
-+++ b/index.html
-@@ -1,222 +1,250 @@
- <!DOCTYPE html>
- <html lang="th"><head><meta charset="utf-8">
- <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
- <title>Flashroom — online photobooth</title>
--<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Playfair+Display:ital,wght@1,600&family=Space+Mono:wght@400;700&family=Caveat:wght@700&family=Pacifico&family=DM+Serif+Display&display=swap" rel="stylesheet">
-+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Playfair+Display:ital,wght@1,600&family=Space+Mono:wght@400;700&family=Caveat:wght@700&family=Pacifico&family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
- <style>
- :root{--bg:#f3eee7;--ink:#241d1a;--mut:#241d1a99;--ln:#241d1a26;--ac:#d94f6e}
- *{box-sizing:border-box}
- body{margin:0;background:var(--bg);color:var(--ink);font-family:'\''Prompt'\'',system-ui,sans-serif;font-weight:300;padding:max(16px,env(safe-area-inset-top)) 16px max(28px,env(safe-area-inset-bottom))}
- header{max-width:1000px;margin:0 auto 22px;display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px}
- h1{font-family:'\''Playfair Display'\'',serif;font-style:italic;font-weight:600;font-size:32px;margin:0;letter-spacing:-.5px}
- header span{font:400 11px '\''Space Mono'\'',monospace;text-transform:uppercase;letter-spacing:.1em}
- .wrap{max-width:1000px;margin:auto;display:grid;gap:8px 32px}
- @media(min-width:820px){.wrap{grid-template-columns:1fr 1fr;align-items:start}}
- section{margin-bottom:28px}
- h2{font:400 12px '\''Space Mono'\'',monospace;text-transform:uppercase;letter-spacing:.12em;margin:0 0 12px}
- h2 b{color:var(--ac);margin-right:8px}
- button,.chip{font:400 13px '\''Prompt'\'',sans-serif;background:none;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
- .on{background:var(--ink);color:var(--bg)}
- .big{background:var(--ac);border-color:var(--ac);color:#fff;padding:11px 26px;font-weight:600;font-size:15px}
- button:disabled{opacity:.45}
- .row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
- .lbl{width:100%;font:400 11px '\''Space Mono'\'',monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--mut)}
- .fr{display:flex;gap:16px;overflow-x:auto;padding:6px 4px 14px;scroll-snap-type:x proximity}
- .tk{flex:0 0 auto;border:none;padding:0;background:none;text-align:center;border-radius:0;scroll-snap-align:start}
- .tk canvas{height:170px;width:auto;display:block;box-shadow:0 3px 12px #0003;outline:2px solid transparent;outline-offset:4px}
- .tk.on{background:none;color:var(--ink)}.tk.on canvas{outline-color:var(--ink)}
- .tk i{display:block;font:normal 700 12px '\''Space Mono'\'',monospace;margin-top:10px}
- .tk small{display:block;font-size:11px;color:var(--mut)}
- .cam{position:relative;overflow:hidden;background:#000;width:100%;max-width:440px}
- video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block}
- #tn{position:absolute;inset:0;mix-blend-mode:color;pointer-events:none}
- #cd{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:400 120px '\''Playfair Display'\'',serif;color:#fff;text-shadow:0 4px 24px #0009;pointer-events:none}
- #msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px;font-size:14px}
--input[type=text]{font:inherit;border:1.5px solid var(--ink);background:none;color:var(--ink);padding:8px 12px;width:100%;border-radius:0}
-+select,input[type=text]{font:inherit;border:1.5px solid var(--ink);background:none;color:var(--ink);padding:8px 12px;width:100%;border-radius:0}
- input[type=color]{width:34px;height:34px;border:1.5px solid var(--ink);background:none;padding:2px}
- .st.k{font:400 15px '\''Prompt'\'',sans-serif;padding:5px 10px;border:1px solid var(--ln)}.st.k.on{border-color:var(--ink)}
- .mach{background:#2b2522;border-radius:10px;padding:14px;max-width:440px;margin:0 auto 14px}
- .plate{border:1px solid #ffffff55;color:#ffffffcc;font:400 11px '\''Space Mono'\'',monospace;text-align:center;padding:4px;margin-bottom:10px;letter-spacing:.2em}
- .rol{height:14px;background:linear-gradient(#0a0a0a,#666,#0a0a0a);border-radius:4px;margin:0 5%}
- .slot{background:#0c0c0c;margin:0 5%;overflow:hidden;padding:0 8%;min-height:60px}
- #out{width:100%;height:auto;display:block;cursor:crosshair;touch-action:manipulation}
- #out.hide{transform:translateY(-102%);transition:none}
- #out.print{transform:translateY(0);transition:transform 5s cubic-bezier(.3,.65,.3,1)}
- #note{font-size:12px;text-align:center;color:var(--mut);min-height:16px}
-+.help{font-size:11px;color:var(--mut);margin:-4px 0 8px}
-+select{border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);padding:8px 12px;border-radius:0;width:100%}
- </style></head><body>
- <header><h1>Flashroom</h1><span>online photobooth</span></header>
- <div class="wrap">
- <div>
-- <section><h2><b>01</b>Choose frame</h2><div class="fr" id="ths"></div></section>
-+ <section><h2><b>01</b>Choose frame</h2><p class="help">กรอบทั้งหมดเป็นดีไซน์ต้นฉบับที่วาดด้วยโค้ด ไม่ใช้ภาพ โลโก้ หรืองานของตู้ถ่ายรูปแบรนด์อื่น</p><div class="fr" id="ths"></div></section>
-  <section><h2><b>02</b>Shoot</h2>
-   <div class="cam" id="cam"><video id="v" playsinline muted autoplay></video><div id="tn"></div><div id="cd"></div><div id="msg">กำลังเปิดกล้อง… กด "อนุญาต" ถ้าเบราว์เซอร์ถาม</div></div>
--  <div class="row"><span class="lbl">Timer</span><span id="tm" class="row" style="margin:0"></span><span class="chip" id="sm">หน้าเนียน</span></div>
-+  <div class="row"><span class="lbl">Timer</span><span id="tm" class="row" style="margin:0"></span><span class="chip" id="sm">Soft focus</span></div>
-+  <div class="row"><span class="lbl">Photo look</span><span id="fl" class="row" style="margin:0"></span></div>
-+  <p class="help">โหมดคมชัดจะเก็บภาพจากกล้องโดยไม่ใส่ฟิลเตอร์หรือเบลอ</p>
-   <div class="row"><button class="big" id="go">เริ่มถ่าย</button><button id="re">ถ่ายใหม่</button></div>
-  </section>
- </div>
- <div>
-  <section><h2><b>03</b>Your strip</h2>
-   <div class="mach"><div class="plate">PHOTOS HERE ↓</div><div class="rol"></div><div class="slot"><canvas id="out"></canvas></div></div>
-   <div class="row" style="justify-content:center"><button class="big" id="sp">เซฟรูป</button><button class="big" id="sv">เซฟวิดีโอ</button></div>
-   <div id="note"></div>
-  </section>
-  <section><h2><b>04</b>Decorate</h2>
-   <div class="row"><span class="lbl">Background</span><input type="color" id="cc" value="#ffc2d4"><button id="cr">สีเดิมของกรอบ</button></div>
-   <div class="row"><span class="lbl">Caption</span><input type="text" id="tx" maxlength="28" placeholder="พิมพ์ข้อความเอง หรือเว้นว่าง"></div>
-+  <div class="row"><span class="lbl">Caption font</span><select id="ff" aria-label="เลือกฟอนต์แคปชัน"><option value="frame">ตามกรอบ</option><option value="prompt">Prompt</option><option value="playfair">Playfair Display</option><option value="pacifico">Pacifico</option><option value="caveat">Caveat</option><option value="mono">Space Mono</option><option value="fraunces">Fraunces</option></select></div>
-   <div class="row"><span class="lbl">Stickers · แตะเลือก แล้วแตะบนรูปเพื่อวาง</span><span id="stk" class="row" style="margin:0"></span></div>
-   <div class="row"><input type="text" id="ct" maxlength="24" placeholder="พิมพ์หรือวางสติกเกอร์เอง เช่น ᵒ̴̶̷̥́ㅂᵒ̴̶̷̣̥̀" style="flex:1"><input type="color" id="sc" value="#d94f6e"></div>
-   <div class="row"><input type="range" id="ss" min="4" max="14" value="7" style="flex:1"><button id="undo">ลบล่าสุด</button><button id="clr">ล้างทั้งหมด</button></div>
-  </section>
- </div></div>
- <script>
- const $=id=>document.getElementById(id);
- const T=[
- {n:'\''Cherry Milk'\'',sub:'\''dreamy pastel'\'',c:1,r:4,ra:4/3,bg:['\''#ffd9e4'\'','\''#ffc2d4'\''],ink:'\''#c23b62'\'',foot:'\''cherry milk'\'',ff:'\''400 46px Pacifico'\'',art:'\''cherry'\'',cd:10,pad:40,gap:34,fil:'\''brightness(1.12) contrast(.88) saturate(.9)'\'',tint:[['\''#ffb3c6'\'',.28]],fx:{b:.35,g:.05,fade:'\''#ffe4ec'\''}},
- {n:'\''Rosé Archive'\'',sub:'\''soft film'\'',c:1,r:3,ra:.8,shape:'\''arch'\'',bg:['\''#f4d3d6'\'','\''#e9b9c1'\''],ink:'\''#7c3346'\'',foot:'\''rosé archive'\'',ff:'\''italic 600 44px "Playfair Display"'\'',art:'\''rose'\'',pad:40,gap:26,fil:'\''sepia(.25) saturate(.85) contrast(.95) brightness(1.06)'\'',tint:[['\''#e8a0b4'\'',.22]],fx:{fade:'\''#f5d9d2'\'',l:'\''#ffc9a0'\'',g:.09,v:.22}},
- {n:'\''Mint Noir'\'',sub:'\''duotone grain'\'',c:2,r:2,ra:1,rad:6,bg:['\''#d4f3ec'\'','\''#a9e4d8'\''],dots:['\''+'\'','\''rgba(20,110,100,.35)'\''],ink:'\''#0f6b5f'\'',foot:'\''MINT NOIR  vol.01'\'',ff:'\''700 30px "Space Mono"'\'',art:'\''mint'\'',pad:36,gap:14,fil:'\''grayscale(1) contrast(1.25) brightness(1.05)'\'',tint:[['\''#35c0ad'\'',.7]],fx:{g:.16,v:.3}},
- {n:'\''Silver Muse'\'',sub:'\''b&w film strip'\'',c:1,r:4,ra:4/3,bg:['\''#1c1c1e'\'','\''#2a2a2d'\''],ink:'\''#e9e9ee'\'',foot:'\''silver muse'\'',ff:'\''400 46px "DM Serif Display"'\'',art:'\''silver'\'',pad:46,gap:16,rad:4,fil:'\''grayscale(1) contrast(1.35) brightness(.98)'\'',tint:[[]],fx:{g:.22,v:.4,b:.15}},
- {n:'\''Prism Strip'\'',sub:'\''tri-tone'\'',c:1,r:4,ra:4/3,bg:['\''#ffffff'\'','\''#f4f1ee'\''],ink:'\''#55504c'\'',foot:'\''PRISM STRIP'\'',ff:'\''700 30px "Space Mono"'\'',art:'\''prism'\'',pad:46,gap:16,rad:4,fil:'\''grayscale(1) contrast(1.2) brightness(1.05)'\'',tint:[['\''#9b86d6'\'',.62],[],['\''#3fbfae'\'',.62],['\''#e0709f'\'',.62]],fx:{g:.1,v:.15}},
- {n:'\''Flash Kid'\'',sub:'\''ccd digicam'\'',c:2,r:2,ra:1,bg:['\''#ffffff'\'','\''#fff0f5'\''],dots:['\''♥'\'','\''rgba(255,110,160,.3)'\''],ink:'\''#e0457f'\'',
+<!DOCTYPE html>
+<html lang="th"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flashroom — online photobooth</title>
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Playfair+Display:ital,wght@1,600&family=Space+Mono:wght@400;700&family=Caveat:wght@700&family=Pacifico&family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f3eee7;--ink:#241d1a;--mut:#241d1a99;--ln:#241d1a26;--ac:#d94f6e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Prompt',system-ui,sans-serif;font-weight:300;padding:max(16px,env(safe-area-inset-top)) 16px max(28px,env(safe-area-inset-bottom))}
+header{max-width:1000px;margin:0 auto 22px;display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--ink);padding-bottom:10px}
+h1{font-family:'Playfair Display',serif;font-style:italic;font-weight:600;font-size:32px;margin:0;letter-spacing:-.5px}
+header span{font:400 11px 'Space Mono',monospace;text-transform:uppercase;letter-spacing:.1em}
+.wrap{max-width:1000px;margin:auto;display:grid;gap:8px 32px}
+@media(min-width:820px){.wrap{grid-template-columns:1fr 1fr;align-items:start}}
+section{margin-bottom:28px}
+h2{font:400 12px 'Space Mono',monospace;text-transform:uppercase;letter-spacing:.12em;margin:0 0 12px}
+h2 b{color:var(--ac);margin-right:8px}
+button,.chip{font:400 13px 'Prompt',sans-serif;background:none;color:var(--ink);border:1.5px solid var(--ink);border-radius:999px;padding:6px 14px;cursor:pointer}
+.on{background:var(--ink);color:var(--bg)}
+.big{background:var(--ac);border-color:var(--ac);color:#fff;padding:11px 26px;font-weight:600;font-size:15px}
+button:disabled{opacity:.45}
+.row{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0;align-items:center}
+.lbl{width:100%;font:400 11px 'Space Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--mut)}
+.fr{display:flex;gap:16px;overflow-x:auto;padding:6px 4px 14px;scroll-snap-type:x proximity}
+.tk{flex:0 0 auto;border:none;padding:0;background:none;text-align:center;border-radius:0;scroll-snap-align:start}
+.tk canvas{height:170px;width:auto;display:block;box-shadow:0 3px 12px #0003;outline:2px solid transparent;outline-offset:4px}
+.tk.on{background:none;color:var(--ink)}.tk.on canvas{outline-color:var(--ink)}
+.tk i{display:block;font:normal 700 12px 'Space Mono',monospace;margin-top:10px}
+.tk small{display:block;font-size:11px;color:var(--mut)}
+.cam{position:relative;overflow:hidden;background:#000;width:100%;max-width:440px}
+video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block}
+#tn{position:absolute;inset:0;mix-blend-mode:color;pointer-events:none}
+#cd{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:400 120px 'Playfair Display',serif;color:#fff;text-shadow:0 4px 24px #0009;pointer-events:none}
+#msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px;font-size:14px}
+select,input[type=text]{font:inherit;border:1.5px solid var(--ink);background:none;color:var(--ink);padding:8px 12px;width:100%;border-radius:0}
+input[type=color]{width:34px;height:34px;border:1.5px solid var(--ink);background:none;padding:2px}
+.st.k{font:400 15px 'Prompt',sans-serif;padding:5px 10px;border:1px solid var(--ln)}.st.k.on{border-color:var(--ink)}
+.mach{background:#2b2522;border-radius:10px;padding:14px;max-width:440px;margin:0 auto 14px}
+.plate{border:1px solid #ffffff55;color:#ffffffcc;font:400 11px 'Space Mono',monospace;text-align:center;padding:4px;margin-bottom:10px;letter-spacing:.2em}
+.rol{height:14px;background:linear-gradient(#0a0a0a,#666,#0a0a0a);border-radius:4px;margin:0 5%}
+.slot{background:#0c0c0c;margin:0 5%;overflow:hidden;padding:0 8%;min-height:60px}
+#out{width:100%;height:auto;display:block;cursor:crosshair;touch-action:manipulation}
+#out.hide{transform:translateY(-102%);transition:none}
+#out.print{transform:translateY(0);transition:transform 5s cubic-bezier(.3,.65,.3,1)}
+#note{font-size:12px;text-align:center;color:var(--mut);min-height:16px}
+.help{font-size:11px;color:var(--mut);margin:-4px 0 8px}
+select{border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);padding:8px 12px;border-radius:0;width:100%}
+</style></head><body>
+<header><h1>Flashroom</h1><span>online photobooth</span></header>
+<div class="wrap">
+<div>
+ <section><h2><b>01</b>Choose frame</h2><p class="help">กรอบทั้งหมดเป็นดีไซน์ต้นฉบับที่วาดด้วยโค้ด ไม่ใช้ภาพ โลโก้ หรืองานของตู้ถ่ายรูปแบรนด์อื่น</p><div class="fr" id="ths"></div></section>
+ <section><h2><b>02</b>Shoot</h2>
+  <div class="cam" id="cam"><video id="v" playsinline muted autoplay></video><div id="tn"></div><div id="cd"></div><div id="msg">กำลังเปิดกล้อง… กด "อนุญาต" ถ้าเบราว์เซอร์ถาม</div></div>
+  <div class="row"><span class="lbl">Timer</span><span id="tm" class="row" style="margin:0"></span><span class="chip" id="sm">Soft focus</span></div>
+  <div class="row"><span class="lbl">Photo look</span><span id="fl" class="row" style="margin:0"></span></div>
+  <p class="help">โหมดคมชัดจะเก็บภาพจากกล้องโดยไม่ใส่ฟิลเตอร์หรือเบลอ</p>
+  <div class="row"><button class="big" id="go">เริ่มถ่าย</button><button id="re">ถ่ายใหม่</button></div>
+ </section>
+</div>
+<div>
+ <section><h2><b>03</b>Your strip</h2>
+  <div class="mach"><div class="plate">PHOTOS HERE ↓</div><div class="rol"></div><div class="slot"><canvas id="out"></canvas></div></div>
+  <div class="row" style="justify-content:center"><button class="big" id="sp">เซฟรูป</button><button class="big" id="sv">เซฟวิดีโอ</button></div>
+  <div id="note"></div>
+ </section>
+ <section><h2><b>04</b>Decorate</h2>
+  <div class="row"><span class="lbl">Background</span><input type="color" id="cc" value="#ffc2d4"><button id="cr">สีเดิมของกรอบ</button></div>
+  <div class="row"><span class="lbl">Caption</span><input type="text" id="tx" maxlength="28" placeholder="พิมพ์ข้อความเอง หรือเว้นว่าง"></div>
+  <div class="row"><span class="lbl">Caption font</span><select id="ff" aria-label="เลือกฟอนต์แคปชัน"><option value="frame">ตามกรอบ</option><option value="prompt">Prompt</option><option value="playfair">Playfair Display</option><option value="pacifico">Pacifico</option><option value="caveat">Caveat</option><option value="mono">Space Mono</option><option value="fraunces">Fraunces</option></select></div>
+  <div class="row"><span class="lbl">Stickers · แแตะเลือก แล้วแตะบนรูปเพื่อวาง</span><span id="stk" class="row" style="margin:0"></span></div>
+  <div class="row"><input type="text" id="ct" maxlength="24" placeholder="พิมพ์หรือวางสติกเกอร์เอง เช่น ᵒ̴̶̷̥́ㅂᵒ̴̶̷̣̥̀" style="flex:1"><input type="color" id="sc" value="#d94f6e"></div>
+  <div class="row"><input type="range" id="ss" min="4" max="14" value="7" style="flex:1"><button id="undo">ลบล่าสุด</button><button id="clr">ล้างทั้งหมด</button></div>
+ </section>
+</div></div>
+<script>
+const $=id=>document.getElementById(id);
+const T=[
+{n:'Cherry Milk',sub:'dreamy pastel',c:1,r:4,ra:4/3,bg:['#ffd9e4','#ffc2d4'],ink:'#c23b62',foot:'cherry milk',ff:'400 46px Pacifico',art:'cherry',cd:10,pad:40,gap:34,fil:'brightness(1.12) contrast(.88) saturate(.9)',tint:[['#ffb3c6',.28]],fx:{b:.35,g:.05,fade:'#ffe4ec'}},
+{n:'Rosé Archive',sub:'soft film',c:1,r:3,ra:.8,shape:'arch',bg:['#f4d3d6','#e9b9c1'],ink:'#7c3346',foot:'rosé archive',ff:'italic 600 44px "Playfair Display"',art:'rose',pad:40,gap:26,fil:'sepia(.25) saturate(.85) contrast(.95) brightness(1.06)',tint:[['#e8a0b4',.22]],fx:{fade:'#f5d9d2',l:'#ffc9a0',g:.09,v:.22}},
+{n:'Mint Noir',sub:'duotone grain',c:2,r:2,ra:1,rad:6,bg:['#d4f3ec','#a9e4d8'],dots:['+','rgba(20,110,100,.35)'],ink:'#0f6b5f',foot:'MINT NOIR  vol.01',ff:'700 30px "Space Mono"',art:'mint',pad:36,gap:14,fil:'grayscale(1) contrast(1.25) brightness(1.05)',tint:[['#35c0ad',.7]],fx:{g:.16,v:.3}},
+{n:'Silver Muse',sub:'b&w film strip',c:1,r:4,ra:4/3,bg:['#1c1c1e','#2a2a2d'],ink:'#e9e9ee',foot:'silver muse',ff:'400 46px "DM Serif Display"',art:'silver',pad:46,gap:16,rad:4,fil:'grayscale(1) contrast(1.35) brightness(.98)',tint:[[]],fx:{g:.22,v:.4,b:.15}},
+{n:'Prism Strip',sub:'tri-tone',c:1,r:4,ra:4/3,bg:['#ffffff','#f4f1ee'],ink:'#55504c',foot:'PRISM STRIP',ff:'700 30px "Space Mono"',art:'prism',pad:46,gap:16,rad:4,fil:'grayscale(1) contrast(1.2) brightness(1.05)',tint:[['#9b86d6',.62],[],['#3fbfae',.62],['#e0709f',.62]],fx:{g:.1,v:.15}},
+{n:'Flash Kid',sub:'ccd digicam',c:2,r:2,ra:1,bg:['#ffffff','#fff0f5'],dots:['♥','rgba(255,110,160,.3)'],ink:'#e0457f',foot:'flash kid',ff:'700 54px Caveat',art:'flash',cd:9,pad:36,gap:30,fil:'brightness(1.18) contrast(1.28) saturate(1.35)',tint:[['#8fd8ff',.1]],fx:{fl:1,st:1,g:.05}},
+{n:'Crimson Heart',sub:'70s red',c:1,r:1,ra:1,shape:'heart',bg:['#b01a2e','#6f0d1c'],ink:'#ffe6e6',foot:'crimson heart',ff:'400 46px Pacifico',art:'heart',pad:44,gap:0,fil:'sepia(.55) contrast(1.15) saturate(1.1) brightness(1.02)',tint:[['#c23a4a',.18]],fx:{g:.14,v:.4}},
+{n:'Picnic Club',sub:'warm kodak-ish',c:2,r:2,ra:1,rad:16,bg:['#fff1f3','#ffe0e6'],pat:'gingham',pc:'rgba(255,90,110,.22)',ink:'#c2334d',foot:'picnic club',ff:'700 54px Caveat',art:'picnic',cd:10,pad:36,gap:30,fil:'saturate(1.5) contrast(1.1) brightness(1.06) sepia(.18)',tint:[['#ffcf5a',.12]],fx:{b:.28,g:.07,l:'#ffb060'}},
+{n:'Y2K Chrome',sub:'cool ccd',c:1,r:3,ra:1,rad:18,bg:['#eef2fa','#b8c6e0','#eef2fa'],ink:'#3a4d7a',foot:'Y2K CHROME',ff:'700 30px "Space Mono"',art:'chrome',pad:40,gap:22,fil:'saturate(1.15) contrast(1.15) brightness(1.1) hue-rotate(-12deg)',tint:[['#6aa8ff',.16]],fx:{fl:1,v:.12,g:.05,st:1}},
+{n:'Lemon Note',sub:'sunny memo',c:2,r:2,ra:1,rad:10,bg:['#fff9c9','#ffe870'],ink:'#725700',foot:'little sunshine',ff:'700 48px Caveat',art:'flash',pad:36,gap:24,fil:'saturate(1.08) contrast(1.04)',tint:[['#ffe05a',.1]],fx:{g:.025}},
+{n:'Lilac Day',sub:'soft lavender',c:1,r:4,ra:4/3,rad:22,bg:['#f0e8ff','#d7c1f0'],ink:'#6243
