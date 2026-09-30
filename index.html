@@ -2,7 +2,7 @@
 <html lang="th"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Flashroom — online photobooth</title>
-<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Playfair+Display:ital,wght@1,600&family=Space+Mono:wght@400;700&family=Caveat:wght@700&family=Pacifico&family=DM+Serif+Display&family=Fraunces:opsz,wght@9..144,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&family=Playfair+Display:ital,wght@1,600&family=Space+Mono:wght@400;700&family=Caveat:wght@700&family=Pacifico&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f3eee7;--ink:#241d1a;--mut:#241d1a99;--ln:#241d1a26;--ac:#d94f6e}
 *{box-sizing:border-box}
@@ -32,7 +32,7 @@ video{width:100%;height:100%;object-fit:cover;transform:scaleX(-1);display:block
 #tn{position:absolute;inset:0;mix-blend-mode:color;pointer-events:none}
 #cd{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font:400 120px 'Playfair Display',serif;color:#fff;text-shadow:0 4px 24px #0009;pointer-events:none}
 #msg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#fff;text-align:center;padding:20px;font-size:14px}
-select,input[type=text]{font:inherit;border:1.5px solid var(--ink);background:none;color:var(--ink);padding:8px 12px;width:100%;border-radius:0}
+input[type=text]{font:inherit;border:1.5px solid var(--ink);background:none;color:var(--ink);padding:8px 12px;width:100%;border-radius:0}
 input[type=color]{width:34px;height:34px;border:1.5px solid var(--ink);background:none;padding:2px}
 .st.k{font:400 15px 'Prompt',sans-serif;padding:5px 10px;border:1px solid var(--ln)}.st.k.on{border-color:var(--ink)}
 .mach{background:#2b2522;border-radius:10px;padding:14px;max-width:440px;margin:0 auto 14px}
@@ -43,18 +43,14 @@ input[type=color]{width:34px;height:34px;border:1.5px solid var(--ink);backgroun
 #out.hide{transform:translateY(-102%);transition:none}
 #out.print{transform:translateY(0);transition:transform 5s cubic-bezier(.3,.65,.3,1)}
 #note{font-size:12px;text-align:center;color:var(--mut);min-height:16px}
-.help{font-size:11px;color:var(--mut);margin:-4px 0 8px}
-select{border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);padding:8px 12px;border-radius:0;width:100%}
 </style></head><body>
 <header><h1>Flashroom</h1><span>online photobooth</span></header>
 <div class="wrap">
 <div>
- <section><h2><b>01</b>Choose frame</h2><p class="help">กรอบทั้งหมดเป็นดีไซน์ต้นฉบับที่วาดด้วยโค้ด ไม่ใช้ภาพ โลโก้ หรืองานของตู้ถ่ายรูปแบรนด์อื่น</p><div class="fr" id="ths"></div></section>
+ <section><h2><b>01</b>Choose frame</h2><div class="fr" id="ths"></div></section>
  <section><h2><b>02</b>Shoot</h2>
   <div class="cam" id="cam"><video id="v" playsinline muted autoplay></video><div id="tn"></div><div id="cd"></div><div id="msg">กำลังเปิดกล้อง… กด "อนุญาต" ถ้าเบราว์เซอร์ถาม</div></div>
-  <div class="row"><span class="lbl">Timer</span><span id="tm" class="row" style="margin:0"></span><span class="chip" id="sm">Soft focus</span></div>
-  <div class="row"><span class="lbl">Photo look</span><span id="fl" class="row" style="margin:0"></span></div>
-  <p class="help">โหมดคมชัดจะเก็บภาพจากกล้องโดยไม่ใส่ฟิลเตอร์หรือเบลอ</p>
+  <div class="row"><span class="lbl">Timer</span><span id="tm" class="row" style="margin:0"></span><span class="chip" id="sm">หน้าเนียน</span></div>
   <div class="row"><button class="big" id="go">เริ่มถ่าย</button><button id="re">ถ่ายใหม่</button></div>
  </section>
 </div>
@@ -67,8 +63,7 @@ select{border:1.5px solid var(--ink);background:var(--bg);color:var(--ink);paddi
  <section><h2><b>04</b>Decorate</h2>
   <div class="row"><span class="lbl">Background</span><input type="color" id="cc" value="#ffc2d4"><button id="cr">สีเดิมของกรอบ</button></div>
   <div class="row"><span class="lbl">Caption</span><input type="text" id="tx" maxlength="28" placeholder="พิมพ์ข้อความเอง หรือเว้นว่าง"></div>
-  <div class="row"><span class="lbl">Caption font</span><select id="ff" aria-label="เลือกฟอนต์แคปชัน"><option value="frame">ตามกรอบ</option><option value="prompt">Prompt</option><option value="playfair">Playfair Display</option><option value="pacifico">Pacifico</option><option value="caveat">Caveat</option><option value="mono">Space Mono</option><option value="fraunces">Fraunces</option></select></div>
-  <div class="row"><span class="lbl">Stickers · แแตะเลือก แล้วแตะบนรูปเพื่อวาง</span><span id="stk" class="row" style="margin:0"></span></div>
+  <div class="row"><span class="lbl">Stickers · แตะเลือก แล้วแตะบนรูปเพื่อวาง</span><span id="stk" class="row" style="margin:0"></span></div>
   <div class="row"><input type="text" id="ct" maxlength="24" placeholder="พิมพ์หรือวางสติกเกอร์เอง เช่น ᵒ̴̶̷̥́ㅂᵒ̴̶̷̣̥̀" style="flex:1"><input type="color" id="sc" value="#d94f6e"></div>
   <div class="row"><input type="range" id="ss" min="4" max="14" value="7" style="flex:1"><button id="undo">ลบล่าสุด</button><button id="clr">ล้างทั้งหมด</button></div>
  </section>
@@ -84,6 +79,15 @@ const T=[
 {n:'Flash Kid',sub:'ccd digicam',c:2,r:2,ra:1,bg:['#ffffff','#fff0f5'],dots:['♥','rgba(255,110,160,.3)'],ink:'#e0457f',foot:'flash kid',ff:'700 54px Caveat',art:'flash',cd:9,pad:36,gap:30,fil:'brightness(1.18) contrast(1.28) saturate(1.35)',tint:[['#8fd8ff',.1]],fx:{fl:1,st:1,g:.05}},
 {n:'Crimson Heart',sub:'70s red',c:1,r:1,ra:1,shape:'heart',bg:['#b01a2e','#6f0d1c'],ink:'#ffe6e6',foot:'crimson heart',ff:'400 46px Pacifico',art:'heart',pad:44,gap:0,fil:'sepia(.55) contrast(1.15) saturate(1.1) brightness(1.02)',tint:[['#c23a4a',.18]],fx:{g:.14,v:.4}},
 {n:'Picnic Club',sub:'warm kodak-ish',c:2,r:2,ra:1,rad:16,bg:['#fff1f3','#ffe0e6'],pat:'gingham',pc:'rgba(255,90,110,.22)',ink:'#c2334d',foot:'picnic club',ff:'700 54px Caveat',art:'picnic',cd:10,pad:36,gap:30,fil:'saturate(1.5) contrast(1.1) brightness(1.06) sepia(.18)',tint:[['#ffcf5a',.12]],fx:{b:.28,g:.07,l:'#ffb060'}},
-{n:'Y2K Chrome',sub:'cool ccd',c:1,r:3,ra:1,rad:18,bg:['#eef2fa','#b8c6e0','#eef2fa'],ink:'#3a4d7a',foot:'Y2K CHROME',ff:'700 30px "Space Mono"',art:'chrome',pad:40,gap:22,fil:'saturate(1.15) contrast(1.15) brightness(1.1) hue-rotate(-12deg)',tint:[['#6aa8ff',.16]],fx:{fl:1,v:.12,g:.05,st:1}},
-{n:'Lemon Note',sub:'sunny memo',c:2,r:2,ra:1,rad:10,bg:['#fff9c9','#ffe870'],ink:'#725700',foot:'little sunshine',ff:'700 48px Caveat',art:'flash',pad:36,gap:24,fil:'saturate(1.08) contrast(1.04)',tint:[['#ffe05a',.1]],fx:{g:.025}},
-{n:'Lilac Day',sub:'soft lavender',c:1,r:4,ra:4/3,rad:22,bg:['#f0e8ff','#d7c1f0'],ink:'#6243
+{n:'Y2K Chrome',sub:'cool ccd',c:1,r:3,ra:1,rad:18,bg:['#eef2fa','#b8c6e0','#eef2fa'],ink:'#3a4d7a',foot:'Y2K CHROME',ff:'700 30px "Space Mono"',art:'chrome',pad:40,gap:22,fil:'saturate(1.15) contrast(1.15) brightness(1.1) hue-rotate(-12deg)',tint:[['#6aa8ff',.16]],fx:{fl:1,v:.12,g:.05,st:1}}
+];
+const STK=['(˶ᵔ ᵕ ᵔ˶)','૮₍˶• ༝ •˶₎ა','ᐢ._.ᐢ','(๑>ᴗ<๑)','˙ᗜ˙','´ᯅ`','•᷄ᯅ•᷅','>ᴗoಣ','⦮._.⦯','ᐢ_ ̫ _ᐢ','ඡ·̯ඡ','·ᜊ·','♡','✧','⋆.˚','୨୧','₊˚⊹♡','ᵔᴗᵔ','☆','zZz','♪'];
+let S={t:0,tm:3,smooth:false,col:null,st:STK[0],shots:[],stickers:[],busy:false,idx:0};
+const th=()=>T[S.t],v=$('v'),out=$('out');
+let NZ=null;
+function noise(g){if(!NZ){const n=document.createElement('canvas');n.width=n.height=128;const q=n.getContext('2d'),d=q.createImageData(128,128);for(let i=0;i<d.data.length;i+=4){const k=Math.random()*255;d.data[i]=d.data[i+1]=d.data[i+2]=k;d.data[i+3]=255}q.putImageData(d,0,0);NZ=g.createPattern(n,'repeat')}return NZ}
+function cover(g,s,sw,sh,x,y,w,h){const r=w/h,q=sw/sh;let cw,ch,cx,cy;if(q>r){ch=sh;cw=sh*r;cx=(sw-cw)/2;cy=0}else{cw=sw;ch=sw/r;cx=0;cy=(sh-ch)/2}g.drawImage(s,cx,cy,cw,ch,x,y,w,h)}
+function rrf(g,x,y,w,h,r){g.beginPath();g.roundRect?g.roundRect(x,y,w,h,r):g.rect(x,y,w,h);g.fill()}
+function shape(g,x,y,w,h,k,rad){g.beginPath();
+ if(k==='heart'){g.moveTo(x+w/2,y+h*.95);g.bezierCurveTo(x-w*.12,y+h*.55,x+w*.02,y-h*.02,x+w/2,y+h*.28);g.bezierCurveTo(x+w*.98,y-h*.02,x+w*1.12,y+h*.55,x+w/2,y+h*.95);g.closePath()}
+ else if(k==='arch'){g.moveTo(x,y+h);g.lineTo(x,y+w/2);g.arc(x+w/2,y+w/2,w/2,Math.PI,0);g.lineTo(x+w,y+h);g.
